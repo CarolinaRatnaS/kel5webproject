@@ -1,6 +1,6 @@
 <?php
 	//1. membuat koneksi
-	$connection = mysqli_connect("localhost", "root", "", "widget_corp");
+	$db = mysqli_connect("localhost", "root", "", "db_inventory");
 	
 	//2. test jika koneksi gagal
 	if(mysqli_connect_errno()) {

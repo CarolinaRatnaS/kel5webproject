@@ -1,21 +1,46 @@
+<?php
+	
+	include("includes/koneksi.php");
+	
+	$nama = $_SESSION['user']['id_user'];
+	
+	$query = "SELECT * FROM user WHERE id_user = '$nama'";
+	$hasil = mysqli_query($db, $query);
+	$row = mysqli_fetch_assoc($hasil);
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
       <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Free Bootstrap Admin Template : Binary Admin</title>
+    <title>Toko Komputer</title>
 	<!-- BOOTSTRAP STYLES-->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
      <!-- FONTAWESOME STYLES-->
     <link href="assets/css/font-awesome.css" rel="stylesheet" />
      <!-- MORRIS CHART STYLES-->
-    <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+   <!-- <link href="assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" /> -->
         <!-- CUSTOM STYLES-->
     <link href="assets/css/custom.css" rel="stylesheet" />
      <!-- GOOGLE FONTS-->
-   <link href='http://f jhgsdfghjionts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+   <link href='http://fjhgsdfghjionts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
    <!-- TABLE STYLES-->
     <link href="assets/js/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
+	<!-- DATA DATE PICKER -->
+	<link href="jquery-ui-1.11.4/smoothness/jquery-ui.css" rel="stylesheet" />
+	  <script src="jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+	  <script src="jquery-ui-1.11.4/jquery-ui.js"></script>
+	  <script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+	  <link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.theme.css" />
+	  <script>
+	   $(document).ready(function(){
+		   $("#tanggal").datepicker({
+			   //showButtonPanel: true,
+                  //minDate: new Date(),
+                 // showTime: true
+		   })
+	   })
+	  </script>
 </head>
 <body>
     <div id="wrapper">
@@ -27,19 +52,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">Toko Komputer</a> 
+                <a class="navbar-brand" href="data_barang.php">Toko Komputer</a> 
             </div>
   <div style="color: white;
 padding: 15px 50px 5px 50px;
 float: right;
-font-size: 16px;"> Selamat datang, User1 <?php // ini untuk keterangan siapa yg login // ?> &nbsp; <a href="#" class="btn btn-danger square-btn-adjust">Kelola User</a> </div>
+font-size: 16px;"> Selamat datang, <?php  if (isset($_SESSION['user'])) : ?><?php echo $row["nama"]; ?><?php endif ?><i  style="color: #888;"> (Admin)</i> &nbsp; <a href="edit_profile_admin.php" class="btn btn-danger square-btn-adjust">Edit Profile</a> </div>
         </nav>   
            <!-- /. NAV TOP  -->
                 <nav class="navbar-default navbar-side" role="navigation">
             <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
 				<li class="text-center">
-                    <img src="assets/img/kucing.jpg" class="user-image img-responsive"/>
+                    <img src="assets/img/admin.png" class="user-image img-responsive"/>
 					</li>
                     <li>
                         <a href="data_barang.php"></i>Data Barang</a>
@@ -60,7 +85,7 @@ font-size: 16px;"> Selamat datang, User1 <?php // ini untuk keterangan siapa yg 
                         <a  href="penjualan.php">Penjualan</a>
                     </li>
 					<li>
-                        <a  href="#">Logout</a>
+                        <a  href="logout.php">Logout</a>
                     </li>
                     <!--<li>
                         <a  href="tab-panel.php"><i class="fa fa-qrcode fa-3x"></i> Tabs & Panels</a>
