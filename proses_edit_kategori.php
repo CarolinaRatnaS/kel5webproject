@@ -1,4 +1,3 @@
-<?php include("cek_login.php"); ?>
 <?php
 	include("includes/koneksi.php");
 	

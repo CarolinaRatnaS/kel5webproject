@@ -18,6 +18,9 @@
 			  SET password = '$pwnew' WHERE id='$id'";
 	mysqli_query($db, $query);
 	
+	} else {
+		echo "<script>alert('Gagal di tambahkan!');history.go(-1);</script>";
+	}
+	
 	header('Location: edit_profile_admin.php');
-	}	
 ?>

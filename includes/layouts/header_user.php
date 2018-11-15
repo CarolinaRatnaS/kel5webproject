@@ -41,6 +41,19 @@
 		   })
 	   })
 	  </script>
+	  <style>
+            .pesan{
+                display: none;
+                position: fixed;
+                border: 1px solid blue;
+                width: 200px;
+                top: 10px;
+                left: 200px;
+                padding: 5px 10px;
+                background-color: lightskyblue;
+                text-align: center;
+            }
+        </style>
 </head>
 <body>
     <div id="wrapper">
@@ -57,7 +70,7 @@
   <div style="color: white;
 padding: 15px 50px 5px 50px;
 float: right;
-font-size: 16px;"> Selamat datang, <?php  if (isset($_SESSION['user'])) : ?><?php echo $row["nama"]; ?><?php endif ?><i  style="color: #888;"> (Pegawai)</i> &nbsp; <a href="#" class="btn btn-danger square-btn-adjust">Edit Profile</a> </div>
+font-size: 16px;"> Selamat datang, <?php  if (isset($_SESSION['user'])) : ?><?php echo $row["nama"]; ?><?php endif ?><i  style="color: #888;"> (Pegawai)</i> &nbsp; <a href="edit_profile_user.php" class="btn btn-danger square-btn-adjust">Edit Profile</a> </div>
         </nav>   
            <!-- /. NAV TOP  -->
                 <nav class="navbar-default navbar-side" role="navigation">

@@ -52,7 +52,7 @@
                             <div class="row">
                                 <div class="col-md-6">
 									
-                        .            <form role="form" action="proses_edit_barang.php" method="post" enctype="multipart/form-data">
+                                    <form role="form" action="proses_edit_barang.php" method="post" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label>Kode Barang</label>
                                             <input class="form-control" type="text" value="<?php echo $row['kode']; ?>" name="kode_barang" />
@@ -65,7 +65,7 @@
                                             <label>Gambar Barang</label>
 											<br />
 											<img src="<?php echo $row ['gambar']; ?>" width="50">
-											<input type="file" name="gambar" />
+											<input type="file" name="gambar" value="<?php echo $row['gambar']; ?>" />
                                         </div>
 										<div class="form-group">
                                             <label>Stok</label>
@@ -106,7 +106,7 @@
                                             </select>
                                         </div>
 										<input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
-										<button href="new/proses_edit_barang.php" class="btn btn-primary">Simpan Transaksi</button>
+										<button href="proses_edit_barang.php" class="btn btn-primary">Simpan</button>
                                     </form>
 									
 								</div> <!-- Selesai form kiri -->

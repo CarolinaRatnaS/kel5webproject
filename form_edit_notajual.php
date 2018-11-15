@@ -1,34 +1,35 @@
-﻿<?php include("cek_login.php"); ?>
-<?php 
-	//session_start();
-	if(isset($_SESSION['count'])) {
-		//echo "<pre>";
-		//print_r($_SESSION['brg']);
-		//echo "</pre>";
-	}
+<?php include("cek_login.php"); ?>
+<?php
+
+	//koneksi
+	include("includes/koneksi.php");
 	
-	if (isset($_SESSION['tmpbarang'])) {
-			$tmp_barang=$_SESSION['tmpbarang'];
+	$id = $_GET['id'];
+	
+	$query = "SELECT * FROM penjualan WHERE id=$id";
+	$hasil = mysqli_query($db, $query);
+
+	//tampil
+	$row = mysqli_fetch_assoc($hasil);
+	
+	$tanggal = $row['tanggal'];
+	
+	function ubahTanggal($tanggal){
+		 $pisah = explode('-',$tanggal);
+		 $array = array($pisah[1],$pisah[2],$pisah[0]);
+		 $satukan = implode('/',$array);
+		 return $satukan;
 		}
-		if (isset($_SESSION['tmpjumlah'])) {
-			$tmp_jumlah=$_SESSION['tmpjumlah'];
-		}
-		if (isset($_SESSION['tmphargabeli'])) {
-			$tmp_hargabeli=$_SESSION['tmphargabeli'];
-		}
-	
-	
-	//echo $_SESSION['brg']['0']['harga_beli'];
-	
-	include("includes/koneksi.php");	
+		
+		$tanggal_ubah = ubahTanggal($tanggal);
 ?>
-	
+
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper" >
             <div id="page-inner">
                 <div class="row">
                     <div class="col-md-12">
-                     <h2>Pembelian</h2>   
+                     <h2>Penjualan</h2>   
                        
                     </div>
                 </div>
@@ -39,48 +40,46 @@
                 <div class="col-md-12">
                     <!-- Advanced Tables -->
 					<div>
-						<a href="tambah_pembelian.php">Tambah Nota</a> | <a href="tambah_pembelian_barang.php">Tambah Barang Beli</a> | <a href="pembelian.php">Tampil Nota</a> | <a href="tampil_barang_beli.php">Tampil Semua Barang Beli</a>
+						<a href="tambah_penjualan.php">Tambah Nota</a> | <a href="tambah_penjualan_barang.php">Tambah Barang Jual</a> | <a href="penjualan.php">Tampil Nota</a> | <a href="tampil_barang_jual.php">Tampil Semua Barang Jual</a>
 					</div>
 					<br />
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             Tambah Pembelian
+                             Edit Nota Jual
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3>Pembelian Baru</h3>
-                                    <form role="form" action="proses_tambah_pembelian.php" method="post">
+                                    <form action="proses_edit_nota.php" method="post">
                                         <div class="form-group">
-                                            <label>Nota Pembelian</label>
-                                            <input class="form-control" type="text" name="nota" />
+                                            <label>Nota Penjualan</label>
+                                            <input class="form-control" type="text" name="nota" value="<?php echo $row['nota_jual']; ?>" />
                                         </div>
                                         <div class="form-group">
                                             <label>Tanggal</label>
-											<input class="form-control" type="text" name="tanggal" id="tanggal" />
+											<input class="form-control" type="text" name="tanggal" id="tanggal" value="<?php echo $tanggal_ubah; ?>" />
+                                        </div>
+										<div class="form-group">
+                                            <label>Keterangan</label>
+                                            <textarea class="form-control" rows="3" type="text" name="keterangan"><?php echo $row['keterangan']; ?></textarea>
                                         </div>
                                         <div class="form-group">
-                                            <label>Supplier</label>
-											<select class="form-control" name="supplier">
+                                            <label>Pelanggan</label>
+											<select class="form-control" name="pelanggan">
                                                 <?php 
-													$q3 = "SELECT * FROM supplier";
+													$q3 = "SELECT * FROM pelanggan";
 													$h3 = mysqli_query($db, $q3);
 													while($row = mysqli_fetch_assoc($h3)) { ?>
-													<option value="<?php echo $row['kode']; ?>"><?php echo $row['nama_supplier']; ?></option>
+													<option value="<?php echo $row['kode']; ?>"><?php echo $row['nama_pelanggan']; ?></option>
 												<?php } ?>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Keterangan</label>
-                                            <textarea class="form-control" rows="3" type="text" name="keterangan"></textarea>
-                                        </div>
-										<input type="submit" name="simpan_nota" class="btn btn-default" value="Simpan Nota" />
+										<input type="hidden" value="<?php echo $row['id']; ?>" name="id"/>
+										<button href="proses_edit_notajual.php" class="btn btn-primary">Simpan</button>
                                     </form>
+									
 								</div> <!-- Selesai form kiri -->
-                                
-                                
                             </div> <!-- Selesai Form kanan kiri -->
-							
                         </div>
 						</div>
                     <!--End Advanced Tables -->

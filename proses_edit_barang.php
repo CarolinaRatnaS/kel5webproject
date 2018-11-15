@@ -6,7 +6,7 @@
 	$ext = end($ext);
 	
 	// deklarasi daftar extensi yang diperbolehkan
-	$ext_boleh = Array("jpg", "png", "gif");
+	$ext_boleh = Array("jpg", "png");
 	// cek apakah extensi file ada di dalam list
 	// dapatkan ukuran file:
 	$size = $_FILES['gambar']['size'];
@@ -24,10 +24,13 @@
 	$harga_jual = mysqli_real_escape_string($db, $_POST['harga_jual']);
 	
 	//3. query
-	$query = "UPDATE pelanggan
-			  SET kode = '$kode_pelanggan', nama_pelanggan = '$nama_pelanggan', alamat = '$alamat', no_telp = '$no_telp'
-			  WHERE id='$id'";
-	mysqli_query($db, $query);
+	if(in_array($ext, $ext_boleh) && $size <= 2*1024*1024){
+		$gambar = move_uploaded_file($sumber, $tujuan);
+		$query = "UPDATE barang
+				  SET kode = '$kode_barang', nama = '$nama_barang', gambar = '$tujuan', stok = '$stok', satuan = '$satuan', kategori_id = '$kategori', supplier_id = '$supplier', harga_beli = '$harga_beli', harga_jual = '$harga_jual'
+				  WHERE id='$id'";
+		mysqli_query($db, $query);
+	}
 	
 	header('Location: data_barang.php');	
 ?>

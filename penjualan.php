@@ -1,4 +1,9 @@
-﻿<?php include("cek_login.php"); ?>
+﻿<?php include("cek_login.php");
+
+//koneksi
+	include("includes/koneksi.php");
+
+?>
 
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper" >
@@ -16,7 +21,7 @@
                 <div class="col-md-12">
                     <!-- Advanced Tables -->
 					<div>
-							<a href="tambah_penjualan.php">Tambah Data Penjualan</a> | <a href="penjualan.php">Tampil Penjualan</a>
+						<a href="tambah_penjualan.php">Tambah Nota</a> | <a href="tambah_penjualan_barang.php">Tambah Barang Jual</a> | <a href="penjualan.php">Tampil Nota</a> | <a href="tampil_barang_jual.php">Tampil Semua Barang Jual</a>
 					</div>
 					<br />
                     <div class="panel panel-default">
@@ -29,50 +34,43 @@
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>No. Penjualan</th>
+                                            <th>Nota Penjualan</th>
                                             <th>Tanggal</th>
-                                            <th>Pelanggan</th>
                                             <th>Keterangan</th>
-											<th>Nama Barang</th>
-											<th>Harga Jual(Rp)</th>
-											<th>Jumlah</th>
+                                            <th>Pelanggan</th>
 											<th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php
+											$query = "SELECT 
+														penjualan.id,
+														penjualan.nota_jual,
+														penjualan.tanggal,
+														penjualan.keterangan,
+														pelanggan.nama_pelanggan
+													  FROM
+														penjualan
+													  INNER JOIN
+														pelanggan
+													  ON
+														penjualan.pelanggan_id = pelanggan.kode";
+											$hasil = mysqli_query($db, $query);
+											$i = 0;
+											while($row = mysqli_fetch_assoc($hasil)){
+											$i++;
+										?>
                                         <tr class="odd gradeX">
-                                            <td>1</td>
-											<td>JL00001</td>
-											<td>05-12-2017</td>
-											<td>Momo</td>
-											<td></td>
-											<td>Kingston 8GB USB2.0</td>
-											<td>40000</td>
-											<td>2</td>
-											<td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+											<td><?php echo $i; ?></td>
+											<td><a href="nota_detiljual.php?id=<?php echo $row['id']; ?>"><?php echo $row['nota_jual']; ?></a></td>
+											<td><?php echo $row['tanggal']; ?></td>
+											<td><?php echo $row['keterangan']; ?></td>
+											<td><?php echo $row['nama_pelanggan']; ?></td>
+											<td><a href="form_edit_notajual.php?id=<?php echo $row['id']; ?>">Edit</a> | <a href="delete_penjualan.php?id=<?php echo $row['id']; ?>">Delete</a></td>
                                         </tr>
-                                        <tr class="even gradeC">
-                                            <td>2</td>
-											<td>JL00002</td>
-											<td>07-12-2017</td>
-											<td>Pil</td>
-											<td></td>
-											<td>SUN 2GB PC 6400 DDR2</td>
-											<td>238000</td>
-											<td>20</td>
-											<td><a href="#">Edit</a> | <a href="#">Delete</a></td>
-                                        </tr>
-                                        <tr class="odd gradeX">
-                                            <td>3</td>
-											<td>JL00002</td>
-											<td>07-12-2017</td>
-											<td>Pil</td>
-											<td></td>
-											<td>Kingston 8GB USB2.0</td>
-											<td>40000</td>
-											<td>3</td>
-											<td><a href="#">Edit</a> | <a href="#">Delete</a></td>
-                                        </tr>
+										<?php
+											}
+										?>
                                     </tbody>
                                 </table>
                             </div>

@@ -45,19 +45,19 @@ include("includes/koneksi.php");
 		$nota = $_POST['nota'];
 		$barang = $_POST['barang'];
 		$jumlah = mysqli_real_escape_string($db, $_POST['jumlah']);
-		$harga_beli = mysqli_real_escape_string($db, $_POST['harga_beli']);
+		$harga_jual = mysqli_real_escape_string($db, $_POST['harga_jual']);
 		
 		//for($i = 0; $i <= count($tmp_barang); $i++){
 		//	$query1 = "INSERT INTO pembelian_detil (pembelian_id, barang_id, jumlah, harga_beli) VALUES ('$nota', '".$tmp_barang['$i']."','".$tmp_jumlah['$i']."','".$tmp_hargabeli['$i']."')";
 		//	mysqli_query($db, $query1);			
 		//}
 		
-		$query2 = "INSERT INTO pembelian_detil (pembelian_id, barang_id, jumlah, harga_beli) VALUES ('$nota', '$barang', '$jumlah', '$harga_beli')";
+		$query2 = "INSERT INTO penjualan_detil (penjualan_id, barang_id, jumlah, harga_jual) VALUES ('$nota', '$barang', '$jumlah', '$harga_jual')";
 		mysqli_query($db, $query2);
-		header('Location: tambah_pembelian_barang.php');
+		header('Location: tambah_penjualan_barang.php');
 	}
 	
-	if(isset($_POST['simpan_pembelian'])) {
-		header('Location: tampil_barang_beli.php');
+	if(isset($_POST['simpan_penjualan'])) {
+		header('Location: tampil_barang_jual.php');
 	}
 ?>

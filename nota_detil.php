@@ -1,7 +1,9 @@
-﻿<?php include("cek_login.php"); 
+<?php include("cek_login.php"); 
 
 //koneksi
 	include("includes/koneksi.php");
+	
+	$id = $_GET['id'];
 	
 	
 							
@@ -32,31 +34,41 @@
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
+								<?php
+									$q = "SELECT * FROM pembelian WHERE id = $id";
+									$h = mysqli_query($db, $q);
+									$row1 = mysqli_fetch_assoc($h);
+								?>
+								<label>Nota Beli</label>
+								<h3><?php echo $row1['nota_beli']; ?></h3>
+								<br />
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Nota Pembelian</th>
-                                            <th>Tanggal</th>
-                                            <th>Keterangan</th>
-                                            <th>Supplier</th>
-											<th>Action</th>
+                                            <th>Nama Barang</th>
+                                            <th>Jumlah</th>
+                                            <th>Harga Beli</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-											$query = "SELECT 
-														pembelian.id,
-														pembelian.nota_beli,
-														pembelian.tanggal,
-														pembelian.keterangan,
-														supplier.nama_supplier
+											$query = "SELECT
+														barang.nama,
+														pembelian_detil.jumlah,
+														pembelian_detil.harga_beli
 													  FROM
-														pembelian
+														pembelian_detil
 													  INNER JOIN
-														supplier
+														barang
 													  ON
-														pembelian.supplier_id = supplier.kode";
+														pembelian_detil.barang_id = barang.kode
+													  INNER JOIN
+														pembelian
+													  ON
+														pembelian_detil.pembelian_id = pembelian.id
+													  WHERE
+														pembelian_detil.pembelian_id = $id";
 											$hasil = mysqli_query($db, $query);
 											$i = 0;
 											while($row = mysqli_fetch_assoc($hasil)){
@@ -64,11 +76,9 @@
 										?>
                                         <tr class="odd gradeX">
 											<td><?php echo $i; ?></td>
-											<td><a href="nota_detil.php?id=<?php echo $row['id']; ?>"><?php echo $row['nota_beli']; ?></a></td>
-											<td><?php echo $row['tanggal']; ?></td>
-											<td><?php echo $row['keterangan']; ?></td>
-											<td><?php echo $row['nama_supplier']; ?></td>
-											<td><a href="form_edit_nota.php?id=<?php echo $row['id']; ?>">Edit</a> | <a href="delete_pembelian.php?id=<?php echo $row['id']; ?>">Delete</a></td>
+											<td><?php echo $row['nama']; ?></td>
+											<td><?php echo $row['jumlah']; ?></td>
+											<td><?php echo $row['harga_beli']; ?></td>
                                         </tr>
 										<?php
 											}

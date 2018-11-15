@@ -1,28 +1,29 @@
-﻿<?php include("cek_login.php"); ?>
-<?php 
-	//session_start();
-	if(isset($_SESSION['count'])) {
-		//echo "<pre>";
-		//print_r($_SESSION['brg']);
-		//echo "</pre>";
-	}
+<?php include("cek_login.php"); ?>
+<?php
+
+	//koneksi
+	include("includes/koneksi.php");
 	
-	if (isset($_SESSION['tmpbarang'])) {
-			$tmp_barang=$_SESSION['tmpbarang'];
+	$id = $_GET['id'];
+	
+	$query = "SELECT * FROM pembelian WHERE id=$id";
+	$hasil = mysqli_query($db, $query);
+
+	//tampil
+	$row = mysqli_fetch_assoc($hasil);
+	
+	$tanggal = $row['tanggal'];
+	
+	function ubahTanggal($tanggal){
+		 $pisah = explode('-',$tanggal);
+		 $array = array($pisah[1],$pisah[2],$pisah[0]);
+		 $satukan = implode('/',$array);
+		 return $satukan;
 		}
-		if (isset($_SESSION['tmpjumlah'])) {
-			$tmp_jumlah=$_SESSION['tmpjumlah'];
-		}
-		if (isset($_SESSION['tmphargabeli'])) {
-			$tmp_hargabeli=$_SESSION['tmphargabeli'];
-		}
-	
-	
-	//echo $_SESSION['brg']['0']['harga_beli'];
-	
-	include("includes/koneksi.php");	
+		
+		$tanggal_ubah = ubahTanggal($tanggal);
 ?>
-	
+
         <!-- /. NAV SIDE  -->
         <div id="page-wrapper" >
             <div id="page-inner">
@@ -44,20 +45,23 @@
 					<br />
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             Tambah Pembelian
+                             Edit Nota Beli
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <h3>Pembelian Baru</h3>
-                                    <form role="form" action="proses_tambah_pembelian.php" method="post">
+                                    <form action="proses_edit_nota.php" method="post">
                                         <div class="form-group">
                                             <label>Nota Pembelian</label>
-                                            <input class="form-control" type="text" name="nota" />
+                                            <input class="form-control" type="text" name="nota" value="<?php echo $row['nota_beli']; ?>" />
                                         </div>
                                         <div class="form-group">
                                             <label>Tanggal</label>
-											<input class="form-control" type="text" name="tanggal" id="tanggal" />
+											<input class="form-control" type="text" name="tanggal" id="tanggal" value="<?php echo $tanggal_ubah; ?>" />
+                                        </div>
+										<div class="form-group">
+                                            <label>Keterangan</label>
+                                            <textarea class="form-control" rows="3" type="text" name="keterangan"><?php echo $row['keterangan']; ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Supplier</label>
@@ -70,17 +74,12 @@
 												<?php } ?>
                                             </select>
                                         </div>
-                                        <div class="form-group">
-                                            <label>Keterangan</label>
-                                            <textarea class="form-control" rows="3" type="text" name="keterangan"></textarea>
-                                        </div>
-										<input type="submit" name="simpan_nota" class="btn btn-default" value="Simpan Nota" />
+										<input type="hidden" value="<?php echo $row['id']; ?>" name="id"/>
+										<button href="proses_edit_nota.php" class="btn btn-primary">Simpan</button>
                                     </form>
+									
 								</div> <!-- Selesai form kiri -->
-                                
-                                
                             </div> <!-- Selesai Form kanan kiri -->
-							
                         </div>
 						</div>
                     <!--End Advanced Tables -->

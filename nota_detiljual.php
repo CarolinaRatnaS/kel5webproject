@@ -1,7 +1,9 @@
-﻿<?php include("cek_login.php"); 
+<?php include("cek_login.php"); 
 
 //koneksi
 	include("includes/koneksi.php");
+	
+	$id = $_GET['id'];
 	
 	
 							
@@ -23,40 +25,50 @@
                 <div class="col-md-12">
                     <!-- Advanced Tables -->
 					<div>
-						<a href="tambah_pembelian.php">Tambah Nota</a> | <a href="tambah_pembelian_barang.php">Tambah Barang Beli</a> | <a href="pembelian.php">Tampil Nota</a> | <a href="tampil_barang_beli.php">Tampil Semua Barang Beli</a>
+						<a href="tambah_penjualan.php">Tambah Nota</a> | <a href="tambah_penjualan_barang.php">Tambah Barang Jual</a> | <a href="penjualan.php">Tampil Nota</a> | <a href="tampil_barang_jual.php">Tampil Semua Barang Jual</a>
 					</div>
 					<br />
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             Tampil Pembelian
+                             Tampil Penjualan
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
+								<?php
+									$q = "SELECT * FROM penjualan WHERE id = $id";
+									$h = mysqli_query($db, $q);
+									$row1 = mysqli_fetch_assoc($h);
+								?>
+								<label>Nota Jual</label>
+								<h3><?php echo $row1['nota_jual']; ?></h3>
+								<br />
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
                                             <th>No.</th>
-                                            <th>Nota Pembelian</th>
-                                            <th>Tanggal</th>
-                                            <th>Keterangan</th>
-                                            <th>Supplier</th>
-											<th>Action</th>
+                                            <th>Nama Barang</th>
+                                            <th>Jumlah</th>
+                                            <th>Harga Jual</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-											$query = "SELECT 
-														pembelian.id,
-														pembelian.nota_beli,
-														pembelian.tanggal,
-														pembelian.keterangan,
-														supplier.nama_supplier
+											$query = "SELECT
+														barang.nama,
+														penjualan_detil.jumlah,
+														penjualan_detil.harga_jual
 													  FROM
-														pembelian
+														penjualan_detil
 													  INNER JOIN
-														supplier
+														barang
 													  ON
-														pembelian.supplier_id = supplier.kode";
+														penjualan_detil.barang_id = barang.kode
+													  INNER JOIN
+														penjualan
+													  ON
+														penjualan_detil.penjualan_id = penjualan.id
+													  WHERE
+														penjualan_detil.penjualan_id = $id";
 											$hasil = mysqli_query($db, $query);
 											$i = 0;
 											while($row = mysqli_fetch_assoc($hasil)){
@@ -64,11 +76,9 @@
 										?>
                                         <tr class="odd gradeX">
 											<td><?php echo $i; ?></td>
-											<td><a href="nota_detil.php?id=<?php echo $row['id']; ?>"><?php echo $row['nota_beli']; ?></a></td>
-											<td><?php echo $row['tanggal']; ?></td>
-											<td><?php echo $row['keterangan']; ?></td>
-											<td><?php echo $row['nama_supplier']; ?></td>
-											<td><a href="form_edit_nota.php?id=<?php echo $row['id']; ?>">Edit</a> | <a href="delete_pembelian.php?id=<?php echo $row['id']; ?>">Delete</a></td>
+											<td><?php echo $row['nama']; ?></td>
+											<td><?php echo $row['jumlah']; ?></td>
+											<td><?php echo $row['harga_jual']; ?></td>
                                         </tr>
 										<?php
 											}

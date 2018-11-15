@@ -60,7 +60,7 @@
 												<option value="pegawai">Pegawai</option>
                                             </select>
 										</div>
-										<button href="proses_register.php" class="btn btn-primary">Simpan</button>
+										<button href="proses_register.php" class="btn btn-primary" name="register">Simpan</button>
                                     </form>
 									
 								</div> <!-- Selesai form kiri -->

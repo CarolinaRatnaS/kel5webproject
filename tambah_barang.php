@@ -82,8 +82,7 @@
                                             <label>Harga Jual(Rp)</label>
 											<input class="form-control" type="text" name="harga_jual" />
                                         </div>
-										<input type="hidden" name="id" value="<?php echo $row['id']; ?>" />
-										<button href="proses_tambah_barang.php" class="btn btn-primary">Simpan Transaksi</button>
+										<button href="proses_tambah_barang.php" class="btn btn-primary">Simpan</button>
                                     </form>
 									
 								</div> <!-- Selesai form kiri -->

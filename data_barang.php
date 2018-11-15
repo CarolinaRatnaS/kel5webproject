@@ -29,19 +29,19 @@
                 <div class="col-md-12">
                     <!-- Advanced Tables -->
 					<div>
-							<a href="tambah_barang.php">Tambah Data Barang</a> | <a href="data_barang.php">Tampil Barang</a>
+						<a href="tambah_barang.php">Tambah Data Barang</a> | <a href="data_barang.php">Tampil Barang</a>
 						</div>
 						<br />
-						<div>
+						<!--<div>
 							<form action="" method="post">
 								Kategori:
 								<select name="kategori">
 									<?php 
-										$q2 = "SELECT * FROM kategori";
-										$h2 = mysqli_query($db, $q2);
-										while($row = mysqli_fetch_assoc($h2)) { ?>
-										<option value="<?php echo $row['id']; ?>"><?php echo $row['nama_kategori']; ?></option>
-									<?php } ?>
+										//$q2 = "SELECT * FROM kategori";
+										//$h2 = mysqli_query($db, $q2);
+										//while($row = mysqli_fetch_assoc($h2)) { ?>
+										<option value="<?php //echo $row['id']; ?>"><?php //echo $row['nama_kategori']; ?></option>
+									<?php //} ?>
 								</select>
 								&nbsp;
 								Kata Kunci:
@@ -50,7 +50,7 @@
 								<button href="#">Cari</button>
 							</form>
 							<br />
-						</div>
+						</div>-->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                              Tabel Data Barang

@@ -16,5 +16,5 @@
 			  WHERE id='$id'";
 	mysqli_query($db, $query);
 	
-	header('Location: edit_profile.php');
+	header('Location: edit_profile_admin.php');
 ?>
